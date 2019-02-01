@@ -1,12 +1,12 @@
-package com.firti.web.firti
+package com.firti.web
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class FirtiApplication
+class WebApplication
 
 fun main(args: Array<String>) {
-	runApplication<FirtiApplication>(*args)
+	runApplication<WebApplication>(*args)
 }
 

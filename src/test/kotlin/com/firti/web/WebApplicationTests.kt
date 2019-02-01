@@ -1,4 +1,4 @@
-package com.firti.web.firti
+package com.firti.web
 
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner
 
 @RunWith(SpringRunner::class)
 @SpringBootTest
-class FirtiApplicationTests {
+class WebApplicationTests {
 
 	@Test
 	fun contextLoads() {
