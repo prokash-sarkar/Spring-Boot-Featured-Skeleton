@@ -36,6 +36,15 @@ dependencies {
 	implementation "org.jetbrains.kotlin:kotlin-reflect"
 	runtimeOnly 'mysql:mysql-connector-java'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools
+	dev group: 'org.springframework.boot', name: 'spring-boot-devtools'
+
+}
+
+bootRun {
+	// Use Spring Boot DevTool only when we run Gradle bootRun task
+	classpath = sourceSets.main.runtimeClasspath + configurations.dev
 }
 
 compileKotlin {
