@@ -8,10 +8,10 @@
         <version>1.5.10.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.example</groupId>
-    <artifactId>demo</artifactId>
+    <groupId>com.firti</groupId>
+    <artifactId>webservice</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>demo</name>
+    <name>firti</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
