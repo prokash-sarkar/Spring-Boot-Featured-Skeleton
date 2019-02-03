@@ -47,9 +47,6 @@ public class UserServiceImpl implements UserService {
     @Value(("${admin.phone2}"))
     private String adminPhone2;
 
-    @Value("${app.config.landlordownagent}")
-    private boolean isLandlordOwnAgent;
-
     @Autowired
     public UserServiceImpl(UserRepository userRepo, AcValidationTokenService acValidationTokenService, MailService mailService, RoleService roleService, RegistrationAttemptService registrationAttemptService) {
         this.userRepo = userRepo;
@@ -128,9 +125,6 @@ public class UserServiceImpl implements UserService {
 
         // set Roles
         user.grantRole(this.roleService.findRole(Role.ERole.ROLE_USER));
-        user.grantRole(this.roleService.findRole(Role.ERole.ROLE_LANDLORD));
-        if (this.isLandlordOwnAgent)
-            user.grantRole(this.roleService.findRole(Role.ERole.ROLE_FIELD_EMPLOYEE));
 
         // Execute only when user is being registered
         if (user.getId() == null) {

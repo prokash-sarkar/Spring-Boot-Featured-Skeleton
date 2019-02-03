@@ -18,12 +18,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @RequestMapping("/api/v1/firebase")
 public class FirebaseController {
     private final FirebaseTokenService firebaseTokenService;
-    private final NotificationService notificationService;
 
     @Autowired
-    public FirebaseController(FirebaseTokenService firebaseTokenService, NotificationService notificationService) {
+    public FirebaseController(FirebaseTokenService firebaseTokenService) {
         this.firebaseTokenService = firebaseTokenService;
-        this.notificationService = notificationService;
     }
 
     @PostMapping("/token")

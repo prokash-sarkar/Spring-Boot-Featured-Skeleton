@@ -26,9 +26,6 @@ public class NotificationServiceImpl implements NotificationService {
     @Value("${app.fcm.serverkey}")
     private String fcmServerKey;
 
-    @Value("${app.config.landlordownagent}")
-    private boolean isLandlordOwnAgent;
-
     private final FirebaseTokenService firebaseTokenService;
 
     @Autowired
