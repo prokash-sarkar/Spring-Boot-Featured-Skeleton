@@ -1,5 +1,6 @@
 package com.firti.webservice.config.security.oauth;
 
+import com.firti.webservice.config.AppConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -23,6 +24,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private String clientId;
     @Value("${app.client.secret}")
     private String clientSecret;
+    @Value("${app.loginEndpoint}")
+    private String loginEndpoint;
 
     @Autowired
     public AuthorizationServerConfig(AuthenticationManager authenticationManager) {
@@ -53,6 +56,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints.authenticationManager(authenticationManager)
+                .pathMapping("/oauth/token", this.loginEndpoint)
                 .allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST)
                 .tokenStore(inMemoryTokenStore())
                 .tokenEnhancer(new CustomTokenEnhancer());

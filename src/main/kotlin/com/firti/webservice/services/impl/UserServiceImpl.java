@@ -119,7 +119,7 @@ public class UserServiceImpl implements UserService {
         if (user.getId() == null && this.exists(user))
             throw new UserAlreadyExistsException("User already exists with this email or username");
         if (user.getPhoneNumber() == null)
-            throw new UserInvalidException("Password length must be at least 6 or more!");
+            throw new UserInvalidException("Phone number can not be empty!");
         if (user.getPassword() == null || user.getPassword().length() < 6)
             throw new UserInvalidException("Password length must be at least 6 or more!");
 

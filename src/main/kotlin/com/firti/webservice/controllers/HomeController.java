@@ -59,7 +59,7 @@ public class HomeController {
     }
 
     @PostMapping("/register")
-    private ResponseEntity register(@ModelAttribute User user, BindingResult bindingResult,
+    private ResponseEntity register(@RequestBody User user, BindingResult bindingResult,
                                     @RequestParam(value = "sendPassword", defaultValue = "false") Boolean sendPassword,
                                     @CurrentUser User currentUser) throws UserAlreadyExistsException, InvalidException, NullPasswordException, JsonProcessingException, UnknownException {
         if (bindingResult.hasErrors())

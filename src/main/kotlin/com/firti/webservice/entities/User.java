@@ -2,6 +2,7 @@ package com.firti.webservice.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.firti.webservice.entities.base.BaseEntity;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -43,7 +44,7 @@ public class User extends BaseEntity implements UserDetails {
     @NotEmpty
     @NotNull
     @Size(min = 6, max = 100, message = "Password must be between 6 to 100 characters!")
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(length = 512, nullable = false)
     private String password;
 
