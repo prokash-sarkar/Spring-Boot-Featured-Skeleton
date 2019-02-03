@@ -3,9 +3,9 @@ package com.firti.webservice.services.impl;
 import com.firti.webservice.commons.utils.DateUtil;
 import com.firti.webservice.entities.AcValidationToken;
 import com.firti.webservice.entities.User;
+import com.firti.webservice.exceptions.forbidden.ForbiddenException;
 import com.firti.webservice.repositories.AcValidationTokenRepository;
 import com.firti.webservice.services.AcValidationTokenService;
-import com.firti.webservice.exceptions.forbidden.ForbiddenException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

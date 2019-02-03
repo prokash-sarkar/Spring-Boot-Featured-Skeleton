@@ -55,7 +55,7 @@ public class HomeController {
     private ResponseEntity index() {
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(URI.create("/swagger-ui.html"));
-        return new ResponseEntity(headers,HttpStatus.TEMPORARY_REDIRECT);
+        return new ResponseEntity(headers, HttpStatus.TEMPORARY_REDIRECT);
     }
 
     @PostMapping("/register")

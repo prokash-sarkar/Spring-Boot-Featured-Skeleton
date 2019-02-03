@@ -41,7 +41,7 @@ public interface UserService {
     void requireAccountValidationByEmail(String email, String validationUrl) throws UserNotFoundException;
 
     @Transactional
-    User resetPassword(String username,String token, String password) throws NullPasswordException, UserAlreadyExistsException, UserInvalidException, ForbiddenException;
+    User resetPassword(String username, String token, String password) throws NullPasswordException, UserAlreadyExistsException, UserInvalidException, ForbiddenException;
 
     Page<User> findUsersIn(List<Long> userIds, int page);
 

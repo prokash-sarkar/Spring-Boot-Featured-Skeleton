@@ -2,12 +2,12 @@ package com.firti.webservice.services.impl;
 
 import com.firti.webservice.entities.User;
 import com.firti.webservice.entities.firebase.FirebaseUserToken;
-import com.firti.webservice.repositories.FirebaseTokenRepository;
-import com.firti.webservice.services.FirebaseTokenService;
-import com.firti.webservice.services.UserService;
 import com.firti.webservice.exceptions.invalid.InvalidException;
 import com.firti.webservice.exceptions.notfound.FirebaseTokenNotFoundException;
 import com.firti.webservice.exceptions.notfound.UserNotFoundException;
+import com.firti.webservice.repositories.FirebaseTokenRepository;
+import com.firti.webservice.services.FirebaseTokenService;
+import com.firti.webservice.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -2,11 +2,11 @@ package com.firti.webservice.services.impl;
 
 import com.firti.webservice.entities.Role;
 import com.firti.webservice.entities.User;
+import com.firti.webservice.exceptions.forbidden.ForbiddenException;
+import com.firti.webservice.exceptions.notfound.UserNotFoundException;
 import com.firti.webservice.repositories.RoleRepository;
 import com.firti.webservice.repositories.UserRepository;
 import com.firti.webservice.services.RoleService;
-import com.firti.webservice.exceptions.forbidden.ForbiddenException;
-import com.firti.webservice.exceptions.notfound.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

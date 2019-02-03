@@ -1,11 +1,10 @@
 package com.firti.webservice.controllers.api.firebase;
 
-import com.firti.webservice.services.FirebaseTokenService;
-import com.firti.webservice.services.NotificationService;
 import com.firti.webservice.entities.User;
 import com.firti.webservice.entities.annotations.CurrentUser;
 import com.firti.webservice.exceptions.invalid.InvalidException;
 import com.firti.webservice.exceptions.notfound.UserNotFoundException;
+import com.firti.webservice.services.FirebaseTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
