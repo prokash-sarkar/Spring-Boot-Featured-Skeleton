@@ -119,21 +119,21 @@ public class HomeController {
 
 
     // Verify email when registration
-    @GetMapping("/register/verify")
+    @PostMapping("/register/verify")
     @Transactional
-    String verifyRegistration(@RequestParam("token") String token) throws Exception, NullPasswordException, UserAlreadyExistsException, UserInvalidException, ForbiddenException {
+    ResponseEntity verifyRegistration(@RequestParam("token") String token) throws Exception, NullPasswordException, UserAlreadyExistsException, UserInvalidException, ForbiddenException {
         if (!this.acValidationTokenService.isTokenValid(token))
-            return "redirect:" + this.baseUrl + "/login?verify=false";
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Token Invalid!");
         AcValidationToken acValidationToken = this.acValidationTokenService.findByToken(token);
-        if (acValidationToken == null) return "redirect:" + this.baseUrl + "/login?verify=false";
+        if (acValidationToken == null) return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Token doesn't exist!");
         User user = acValidationToken.getUser();
-        user.setEnabled(true);
+        user.setCredentialsNonExpired(true);
         this.userService.save(user);
 
         acValidationToken.setTokenValid(false);
-        acValidationToken.setReason("Registration/Email Confirmation");
+        acValidationToken.setReason("Registration/Otp Confirmation");
         this.acValidationTokenService.save(acValidationToken);
-        return "redirect:" + this.baseUrl + "/login?verify=true";
+        return ResponseEntity.ok("User verified!");
     }
 
 
