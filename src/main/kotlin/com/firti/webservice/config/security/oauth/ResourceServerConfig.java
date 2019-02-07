@@ -44,11 +44,11 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                         "/api/v1/search/users",
                         "/api/v1/stats/employee"
                 )
-                .hasAnyAuthority(Role.StringRole.ROLE_ADMIN, Role.StringRole.ROLE_EMPLOYEE, Role.StringRole.ROLE_FIELD_EMPLOYEE)
+                .hasAnyAuthority(Role.StringRole.ROLE_ADMIN)
                 .antMatchers(
                         "/api/v1/admin/**"
                 )
-                .hasAnyAuthority(Role.StringRole.ROLE_ADMIN, Role.StringRole.ROLE_EMPLOYEE)
+                .hasAnyAuthority(Role.StringRole.ROLE_ADMIN)
                 .antMatchers(
                         "/api/v1/users"
                 )

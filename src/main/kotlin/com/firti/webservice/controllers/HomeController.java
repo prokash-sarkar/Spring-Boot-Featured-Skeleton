@@ -71,7 +71,7 @@ public class HomeController {
         this.notifyAdmin(user);
 
         // send sms to landlords with their password when field employee adds them
-        if (currentUser != null && !currentUser.isNotAdminOrEmployeeOrFieldEmployee() && sendPassword) {
+        if (currentUser != null && !currentUser.isAdmin() && sendPassword) {
             String message = "Dear User, your " + baseUrl + " credentials are - Username: " + user.getUsername() + " and Password: " + tempRawPassword;
             NetworkUtil.sendSms(user.getUsername(), message);
         }

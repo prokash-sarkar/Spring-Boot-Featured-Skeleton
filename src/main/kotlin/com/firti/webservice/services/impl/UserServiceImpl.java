@@ -1,6 +1,7 @@
 package com.firti.webservice.services.impl;
 
 import com.firti.webservice.commons.PageAttr;
+import com.firti.webservice.commons.utils.DateUtil;
 import com.firti.webservice.commons.utils.NetworkUtil;
 import com.firti.webservice.commons.utils.PasswordUtil;
 import com.firti.webservice.commons.utils.SessionIdentifierGenerator;
@@ -28,6 +29,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -125,6 +128,8 @@ public class UserServiceImpl implements UserService {
 
         // set Roles
         user.grantRole(this.roleService.findRole(Role.ERole.ROLE_USER));
+        if (Role.getERole(user.getUserType()).equals(Role.ERole.ROLE_DRIVER))
+            user.grantRole(this.roleService.findRole(Role.ERole.ROLE_DRIVER));
 
         // Execute only when user is being registered
         if (user.getId() == null) {
@@ -139,14 +144,16 @@ public class UserServiceImpl implements UserService {
                 throw new UserInvalidException("Maximum limit exceed!");
             this.registrationAttemptService.registrationSuccess(ip);
         }
-//        boolean newUser = user.getId()==null;
-//        user = this.userRepo.save(user);
-//        if (newUser) try {
-//            if (!user.isOnlyUser())
-//                this.requireAccountValidationByEmail(user.getEmail(), "/register/verify");
-//        } catch (UserNotFoundException e) {
-//            e.printStackTrace();
-//        }
+        // sent otp for new user
+        boolean newUser = user.getId() == null;
+        user = this.userRepo.save(user);
+        if (newUser) try {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(System.currentTimeMillis() + 120000);
+            this.requireAccountValidationByOTP(user.getPhoneNumber(), calendar.getTime());
+        } catch (UserNotFoundException e) {
+            e.printStackTrace();
+        }
         return this.userRepo.save(user);
     }
 
@@ -167,6 +174,23 @@ public class UserServiceImpl implements UserService {
         if (PasswordUtil.matches(user.getPassword(), password))
             return user;
         return null;
+    }
+
+    @Override
+    public void requireAccountValidationByOTP(String phone, Date tokenValidUntil) throws UserNotFoundException {
+        if (phone == null) throw new IllegalArgumentException("Email invalid!");
+        User user = this.findByPhoneNumber(phone);
+        AcValidationToken acValidationToken = new AcValidationToken();
+        acValidationToken.setToken(String.valueOf(SessionIdentifierGenerator.generateOTP()));
+        acValidationToken.setTokenValid(true);
+        acValidationToken.setUser(user);
+        acValidationToken.setTokenValidUntil(tokenValidUntil);
+        // save acvalidationtoken
+        acValidationToken = this.acValidationTokenService.save(acValidationToken);
+        // build confirmation link
+        String tokenMessage = "Your " + this.applicationName + " token is: " + acValidationToken.getToken();
+        // send link by sms
+        NetworkUtil.sendSms(phone, tokenMessage);
     }
 
     @Override

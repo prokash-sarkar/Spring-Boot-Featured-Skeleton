@@ -36,6 +36,9 @@ public class User extends BaseEntity implements UserDetails {
     @Email
     private String email;
 
+    @Column
+    private String userType;
+
     @Column(unique = true, nullable = false)
     @NotNull
     @Size(min = 11)
@@ -49,19 +52,22 @@ public class User extends BaseEntity implements UserDetails {
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
-//    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private List<Role> roles;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private boolean enabled = true;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private boolean accountNonExpired = true;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private boolean accountNonLocked = true;
-    private boolean credentialsNonExpired = true;
-
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private boolean credentialsNonExpired = false;
 
     @PrePersist
     private void onPrePersist() {
 //        if (roles == null || roles.isEmpty())
 //            grantRole(new Role(Role.ERole.ROLE_USER));
-        if (this.username==null) this.setUsername(this.getPhoneNumber());
+        if (this.username == null) this.setUsername(this.getPhoneNumber());
     }
 
 
@@ -91,30 +97,8 @@ public class User extends BaseEntity implements UserDetails {
     }
 
     @JsonIgnore
-    public boolean isLandLord() {
-        return this.hasRole(Role.ERole.ROLE_LANDLORD.toString());
-    }
-
-    @JsonIgnore
-    public boolean isNotAdminOrEmployeeOrFieldEmployee() {
-        return !this.hasRole(Role.ERole.ROLE_ADMIN.toString())
-                && !this.hasRole(Role.ERole.ROLE_EMPLOYEE.toString())
-                && !this.hasRole(Role.ERole.ROLE_FIELD_EMPLOYEE.toString());
-    }
-
-    @JsonIgnore
-    public boolean isEmployee() {
-        return this.hasRole(Role.ERole.ROLE_EMPLOYEE.toString());
-    }
-
-    @JsonIgnore
-    public boolean isEmployeeOrFieldEmployee() {
-        return this.hasRole(Role.ERole.ROLE_EMPLOYEE.toString()) || this.hasRole(Role.ERole.ROLE_FIELD_EMPLOYEE.toString());
-    }
-
-    @JsonIgnore
-    public boolean isFieldEmployee() {
-        return this.hasRole(Role.ERole.ROLE_FIELD_EMPLOYEE.toString());
+    public boolean isDriver() {
+        return this.hasRole(Role.ERole.ROLE_DRIVER.toString());
     }
 
     @JsonIgnore
@@ -219,5 +203,14 @@ public class User extends BaseEntity implements UserDetails {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
     }
 }
