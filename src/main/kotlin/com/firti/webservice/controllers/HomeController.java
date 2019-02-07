@@ -76,9 +76,7 @@ public class HomeController {
             NetworkUtil.sendSms(user.getUsername(), message);
         }
 
-        SecurityConfig.updateAuthentication(user);
-
-        return ResponseEntity.ok(tokenService.createAccessToken(user));
+        return ResponseEntity.ok("OTP sent!");
     }
 
     private void notifyAdmin(User user) throws UnknownException, InvalidException, JsonProcessingException {
@@ -128,12 +126,15 @@ public class HomeController {
         if (acValidationToken == null) return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Token doesn't exist!");
         User user = acValidationToken.getUser();
         user.setCredentialsNonExpired(true);
-        this.userService.save(user);
+        user = this.userService.save(user);
 
         acValidationToken.setTokenValid(false);
         acValidationToken.setReason("Registration/Otp Confirmation");
         this.acValidationTokenService.save(acValidationToken);
-        return ResponseEntity.ok("User verified!");
+
+        SecurityConfig.updateAuthentication(user);
+
+        return ResponseEntity.ok(tokenService.createAccessToken(user));
     }
 
 

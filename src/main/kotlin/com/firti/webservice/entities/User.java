@@ -42,6 +42,7 @@ public class User extends BaseEntity implements UserDetails {
     @Column(unique = true, nullable = false)
     @NotNull
     @Size(min = 11)
+    @JsonProperty("phone")
     private String phoneNumber;
 
     @NotEmpty
